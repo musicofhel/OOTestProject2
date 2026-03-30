@@ -1,6 +1,10 @@
 """Tests for report generation."""
 from oo_test_project2.models import User
-from oo_test_project2.reports import generate_summary_report, generate_user_listing
+from oo_test_project2.reports import (
+    generate_limited_summary,
+    generate_summary_report,
+    generate_user_listing,
+)
 
 
 class TestSummaryReport:
@@ -18,6 +22,22 @@ class TestSummaryReport:
         report = generate_summary_report([])
         assert report["total"] == 0
         assert report["active_rate"] == 0.0
+
+
+class TestLimitedSummary:
+    def test_limits_users(self):
+        users = [
+            User(id=1, username="a", email="a@t.com"),
+            User(id=2, username="b", email="b@t.com"),
+            User(id=3, username="c", email="c@t.com"),
+        ]
+        report = generate_limited_summary(users, limit=2)
+        assert report["total"] == 2
+
+    def test_default_limit(self):
+        users = [User(id=i, username=f"u{i}", email=f"u{i}@t.com") for i in range(5)]
+        report = generate_limited_summary(users)
+        assert report["total"] == 5
 
 
 class TestUserListing:
