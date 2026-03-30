@@ -1,0 +1,16 @@
+[project]
+name = "oo-test-project2"
+version = "0.1.0"
+description = "OOTestProject2 — dev-loop cascade test target (downstream of OOTestProject1)"
+requires-python = ">=3.11"
+dependencies = []
+
+[project.optional-dependencies]
+dev = ["pytest>=8.0", "ruff>=0.4"]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
