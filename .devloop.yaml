@@ -1,0 +1,6 @@
+ambient: true
+
+deny_list:
+  extra_patterns: []
+  remove_patterns: []
+  allow_patterns: []
