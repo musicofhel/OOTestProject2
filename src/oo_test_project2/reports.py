@@ -1,5 +1,5 @@
 """Report generation from user data."""
-from oo_test_project2.models import User, UserSummary, summarize_users
+from oo_test_project2.models import User, UserSummary, list_users, summarize_users
 
 
 def generate_summary_report(users: list[User]) -> dict:
@@ -15,6 +15,16 @@ def generate_summary_report(users: list[User]) -> dict:
         "active_rate": round(summary.active_rate, 2),
         "roles": summary.roles,
     }
+
+
+def generate_limited_summary(users: list[User], *, limit: int = 100) -> dict:
+    """Generate a summary report from at most *limit* users.
+
+    Combines list_users (upstream db parity) with summarize_users so
+    callers can cap the dataset before aggregation.
+    """
+    limited = list_users(users, limit=limit)
+    return generate_summary_report(limited)
 
 
 def generate_user_listing(

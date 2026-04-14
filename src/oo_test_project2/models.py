@@ -37,6 +37,15 @@ class UserSummary:
         return self.active_users / self.total_users
 
 
+def list_users(users: list[User], *, limit: int = 100) -> list[User]:
+    """Return users up to the given limit.
+
+    Mirrors the upstream list_users(limit) db function, applying the
+    limit to an already-fetched list of User records.
+    """
+    return users[:limit]
+
+
 def summarize_users(users: list[User]) -> UserSummary:
     """Build a UserSummary from a list of User records."""
     summary = UserSummary(total_users=len(users))
